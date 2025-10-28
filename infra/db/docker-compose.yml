@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  pg:
+    image: postgres:16
+    container_name: zaya-postgres
+    environment:
+      POSTGRES_USER: fabio
+      POSTGRES_PASSWORD: Zaya!2025Strong
+      POSTGRES_DB: zaya_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
