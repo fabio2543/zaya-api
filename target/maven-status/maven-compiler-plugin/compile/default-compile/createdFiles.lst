@@ -1,3 +1,13 @@
+com/zaya/api/controller/AuthController.class
+com/zaya/api/model/Role.class
+com/zaya/api/model/User.class
+com/zaya/api/ZayaApiApplication.class
+com/zaya/api/config/JwtAuthenticationFilter.class
+com/zaya/api/service/JwtService.class
+com/zaya/api/repository/UserRepository.class
+com/zaya/api/dto/RegisterRequest.class
+com/zaya/api/dto/AuthResponse.class
+com/zaya/api/model/User$UserBuilder.class
+com/zaya/api/dto/LoginRequest.class
 com/zaya/api/web/HelloController.class
 com/zaya/api/config/SecurityConfig.class
-com/zaya/api/ZayaApiApplication.class
