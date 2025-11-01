@@ -1,0 +1,31 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/zaya_db
+    username: fabio
+    password: Zaya!2025Strong
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # create, update, create-drop, validate
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.type.descriptor.sql: trace
+
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true  # enum sem erro de caixa
+
+
+zaya:
+  jwt:
+    secret: Zaya_Super_Secret_AtLeast_32chars_2025_base
+    expiration-ms: 3600000
+
+#debug: true
+#logging:
+# level:
+#   org.springframework: DEBUG

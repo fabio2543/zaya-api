@@ -100,11 +100,11 @@ git push origin v0.1.0
 
 
 # Subir banco PostgreSQL
-cd infra/db
+cd dev/zaya-api/infra/db
 docker compose up -d
 
 # Rodar API
-cd dev/zaya-api/
+cd ~/dev/zaya-api/
 mvn clean install
 mvn spring-boot:run
 
@@ -121,3 +121,15 @@ Fabio Junior
 
 Product Owner e Desenvolvedor da Clínica Zaya Estética Avançada
 Projeto com foco em escalabilidade, segurança e integração multiplataforma.
+
+
+⚙️ 2️⃣ Ferramentas práticas que todo dev usa pra descobrir o que já existe
+💡 A) IDE (IntelliJ, VS Code, Eclipse)
+
+| Ação                      | Atalho                                  | O que faz                                            |
+| ------------------------- | --------------------------------------- | ---------------------------------------------------- |
+| Ver métodos de uma classe | `Ctrl + Espaço`                         | AutoComplete mostra todos os métodos disponíveis     |
+| Ver hierarquia de classes | `Ctrl + H`                              | Mostra quem herda/implementa a classe/interface      |
+| Ir para definição         | `Ctrl + Click` no nome da classe        | Abre o código-fonte ou a documentação da classe      |
+| Ver Javadoc rápido        | `Ctrl + Q` (IntelliJ) ou `F2` (VS Code) | Mostra o comentário e descrição oficial              |
+| Buscar globalmente        | `Ctrl + Shift + F`                      | Busca por nomes de classes/métodos em todo o projeto |

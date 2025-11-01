@@ -168,10 +168,11 @@ Request
 
 {
   "nome": "Fabio",
-  "email": "fabio@zaya.com",
-  "senha": "Zaya@123"
+  "email": "fabio@zaya5.com",
+  "senha": "Zaya@123",
+  "role": "GESTAO",
+  "celular": "11980642390"
 }
-
 Response
 
 {

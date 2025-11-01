@@ -2,16 +2,48 @@ name: CI - Zaya API
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop, "feature/**" ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: zaya_db
+          POSTGRES_USER: fabio
+          POSTGRES_PASSWORD: Zaya!2025Strong
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U fabio -d zaya_db"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      # Perfil e datasource para testes de integração
+      SPRING_PROFILES_ACTIVE: ci
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/zaya_db
+      SPRING_DATASOURCE_USERNAME: fabio
+      SPRING_DATASOURCE_PASSWORD: Zaya!2025Strong
+      # Evita timezone surpresa
+      TZ: America/Sao_Paulo
+      MAVEN_OPTS: -Xmx2g
+
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up JDK 21
@@ -21,5 +53,40 @@ jobs:
           java-version: 21
           cache: maven
 
-      - name: Build and verify with Maven
-        run: mvn -B -DskipTests=false clean verify
+      - name: Show Java & Maven
+        run: |
+          java -version
+          mvn -v
+
+
+      # Build + testes (inclui JaCoCo se você tiver plugin configurado)
+      - name: Build & Test
+        run: mvn -B clean verify
+
+      # Publica relatórios de testes mesmo se falhar
+      - name: Upload Surefire Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: |
+            **/target/surefire-reports/*
+            **/target/failsafe-reports/*
+
+      # Publica relatório de cobertura (se jacoco está no pom)
+      - name: Upload JaCoCo Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: |
+            **/target/site/jacoco/index.html
+            **/target/site/jacoco/**
+
+      # Empacota JAR como artefato do pipeline
+      - name: Upload App JAR
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zaya-api-jar
+          path: target/*.jar
